@@ -26,7 +26,7 @@ export default async function Home() {
           [payload.id],
         );
         // 3. Map the result to an array of IDs
-        initialIds = res.rows.map((row) => row.name_id);
+        initialIds = res.rows.map((row: { name_id: number }) => row.name_id);
       }
     } catch (e) {
       console.error("Session invalid:", e);

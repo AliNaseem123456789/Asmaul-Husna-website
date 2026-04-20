@@ -7,11 +7,15 @@ import { namesData } from "./data";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-export default function QuizClient({ memorizedList }) {
-  const [currentQuestion, setCurrentQuestion] = useState(null);
-  const [options, setOptions] = useState([]);
+export default function QuizClient({
+  memorizedList,
+}: {
+  memorizedList: any[];
+}) {
+  const [currentQuestion, setCurrentQuestion] = useState<any>(null);
+  const [options, setOptions] = useState<any[]>([]);
   const [score, setScore] = useState(0);
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<any>(null);
 
   useEffect(() => {
     generateQuestion();
@@ -21,7 +25,7 @@ export default function QuizClient({ memorizedList }) {
     const correct =
       memorizedList[Math.floor(Math.random() * memorizedList.length)];
     const distractors = namesData
-      .filter((n) => n.id !== correct.id)
+      .filter((n: any) => n.id !== correct.id)
       .sort(() => 0.5 - Math.random())
       .slice(0, 3);
 
@@ -33,9 +37,9 @@ export default function QuizClient({ memorizedList }) {
     setSelected(null);
   };
 
-  const handleAnswer = (id) => {
+  const handleAnswer = (id: number) => {
     setSelected(id);
-    if (id === currentQuestion.id) setScore(score + 1);
+    if (currentQuestion && id === currentQuestion.id) setScore(score + 1);
     setTimeout(generateQuestion, 800);
   };
 
@@ -54,14 +58,14 @@ export default function QuizClient({ memorizedList }) {
             {currentQuestion?.arabic}
           </h2>
           <div className="grid gap-3">
-            {options.map((opt) => (
+            {options.map((opt: any) => (
               <button
                 key={opt.id}
                 onClick={() => handleAnswer(opt.id)}
                 disabled={selected !== null}
                 className={`p-4 rounded-xl border transition ${
                   selected === opt.id
-                    ? opt.id === currentQuestion.id
+                    ? opt.id === currentQuestion?.id
                       ? "bg-green-900 border-green-500"
                       : "bg-red-900 border-red-500"
                     : "border-stone-800 hover:border-[#d4af37]"
